@@ -4,8 +4,6 @@
 <dict>
 	<key>bundleid</key>
 	<string></string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>3D1CE7A8-69F5-4C09-B4E4-54EC448BD8E2</key>
@@ -88,6 +86,13 @@
 				<string></string>
 				<key>script</key>
 				<string>&lt;?php
+/**
+ * @author: justwkj
+ * @date: 2020/7/22 13:17
+ * @email: justwkj@gmail.com
+ * @desc:
+ */
+
 
 function outputJson($data) {
     $itemArr = [];
@@ -108,8 +113,10 @@ function outputJson($data) {
 
 
 $query = empty($argv[1]) ? '' : $argv[1];
+//chrome插件无法打开,选择一个在线地址
 //$prettyJson = 'chrome-extension://pkgccpejnmalmdinmhkkfafefagiiiad/dynamic/index.html?tool=json-format';
 $prettyJson = 'http://json.la/';
+$diffJson = 'https://www.sojson.com/jsondiff.html';
 $input = shell_exec('pbpaste');
 if (!is_array(json_decode($input, true))) {
     outputJson([
@@ -118,10 +125,15 @@ if (!is_array(json_decode($input, true))) {
             "arg"   =&gt; '',
         ],
         [
-            "title" =&gt; 'JSON美化工具, command+enter 跳转',
-            "arg"   =&gt; $prettyJson,
+            "title"        =&gt; 'JSON Diff, command+enter 跳转',
+            "arg"          =&gt; $diffJson,
+            'quicklookurl' =&gt; $diffJson,
+        ],
+        [
+            "title"        =&gt; 'JSON美化工具, command+enter 跳转',
+            "arg"          =&gt; $prettyJson,
             'quicklookurl' =&gt; $prettyJson,
-        ]
+        ],
     ]);
 }
 $input = json_encode(json_decode($input, true), 256);
@@ -138,7 +150,11 @@ if (in_array($query, ['yasuo', 'm', 'y'])) {
     ];
 } else if (in_array($query, ['meihua', 'g', 'p'])) {
     $data = [
-
+        [
+            "title"        =&gt; 'JSON Diff, command+enter 跳转',
+            "arg"          =&gt; $diffJson,
+            'quicklookurl' =&gt; $diffJson,
+        ],
         [
             'title'        =&gt; 'JSON美化工具, command+enter 跳转',
             'arg'          =&gt; $prettyJson,
@@ -152,6 +168,11 @@ if (in_array($query, ['yasuo', 'm', 'y'])) {
             'arg'   =&gt; $miniJson,
         ],
         [
+            "title"        =&gt; 'JSON Diff, command+enter 跳转',
+            "arg"          =&gt; $diffJson,
+            'quicklookurl' =&gt; $diffJson,
+        ],
+        [
             'title'        =&gt; 'JSON美化工具, command+enter 跳转',
             'arg'          =&gt; $prettyJson,
             'quicklookurl' =&gt; $prettyJson,
@@ -159,10 +180,7 @@ if (in_array($query, ['yasuo', 'm', 'y'])) {
     ];
 }
 
-
-outputJson($data);
-
-</string>
+outputJson($data);</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>

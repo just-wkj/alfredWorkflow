@@ -29,12 +29,18 @@ $query = empty($argv[1]) ? '' : $argv[1];
 //chrome插件无法打开,选择一个在线地址
 //$prettyJson = 'chrome-extension://pkgccpejnmalmdinmhkkfafefagiiiad/dynamic/index.html?tool=json-format';
 $prettyJson = 'http://json.la/';
+$diffJson = 'https://www.sojson.com/jsondiff.html';
 $input = shell_exec('pbpaste');
 if (!is_array(json_decode($input, true))) {
     outputJson([
         [
             "title" => 'JSON格式有误!!!',
             "arg"   => '',
+        ],
+        [
+            "title"        => 'JSON Diff, command+enter 跳转',
+            "arg"          => $diffJson,
+            'quicklookurl' => $diffJson,
         ],
         [
             "title"        => 'JSON美化工具, command+enter 跳转',
@@ -57,7 +63,11 @@ if (in_array($query, ['yasuo', 'm', 'y'])) {
     ];
 } else if (in_array($query, ['meihua', 'g', 'p'])) {
     $data = [
-
+        [
+            "title"        => 'JSON Diff, command+enter 跳转',
+            "arg"          => $diffJson,
+            'quicklookurl' => $diffJson,
+        ],
         [
             'title'        => 'JSON美化工具, command+enter 跳转',
             'arg'          => $prettyJson,
@@ -69,6 +79,11 @@ if (in_array($query, ['yasuo', 'm', 'y'])) {
         [
             'title' => '压缩JSON',
             'arg'   => $miniJson,
+        ],
+        [
+            "title"        => 'JSON Diff, command+enter 跳转',
+            "arg"          => $diffJson,
+            'quicklookurl' => $diffJson,
         ],
         [
             'title'        => 'JSON美化工具, command+enter 跳转',
