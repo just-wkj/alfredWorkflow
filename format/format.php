@@ -2,8 +2,9 @@
 /**
  * @author: justwkj
  * @date: 2020/7/22 13:17
+ * @update_date: 2020/10/28 11:16
  * @email: justwkj@gmail.com
- * @desc:
+ * @desc: 格式化复制的数据
  */
 
 
@@ -24,20 +25,31 @@ function outputJson($data) {
     die;
 }
 
-
 $query = empty($argv[1]) ? '' : $argv[1];
 $input = shell_exec('pbpaste');
 
+
 $array = array_filter(preg_split('/\s+/', $input));
 
-$joinSeparated = $query == '"' ? '"' : "'";
+if ($query==='"' || $query ==="'") {
+    $joinSeparated = $query == '"' ? '"' : "'";
+} else {
+    $joinSeparated = $query;
+}
+
 
 $str = '';
-foreach ($array as $item) {
-    $str .= sprintf('%s%s%s,' . PHP_EOL, $joinSeparated, $item, $joinSeparated);
+if($query==='"' || $query ==="'"){
+    $tmp = [];
+    foreach ($array as $item) {
+        $format = '%s%s%s';
+        $tmp[] = sprintf($format, $joinSeparated, $item, $joinSeparated);
+    }
+    $str = implode(','.PHP_EOL, $tmp);
+} else {
+    $str = implode($joinSeparated, $array);
 }
 outputJson([[
     "title" => '格式化完毕:' . $str,
     "arg"   => $str,
 ]]);
-
