@@ -59,12 +59,6 @@
 				<string></string>
 				<key>script</key>
 				<string>&lt;?php
-
-$query = $argv[1];
-
-echo $query;
-
-?&gt;&lt;?php
 /**
  * @author: justwkj
  * @date: 2020/7/22 13:17
